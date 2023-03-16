@@ -1,0 +1,184 @@
+https://www.youtube.com/watch?v=uJtjVrCwC94
+
+
+                              Installation
+
+
+
+
+Installation Required Python and Packages :
+Python : Install Python from https://www.python.org/
+Check Python : py --version
+Check Python Package : pip --version
+
+
+				Create a project folder
+
+In command Promt set the exact path like  
+C:\Windows\System32>d:
+D:\Flask App\Flask_API
+
+After go to the project path then ..
+
+**Let's setup Virtual Environment :
+>> py -3 -m venv venv
+(Where env is the directory where you want to install venv or Virtual
+environment.)
+Lets Activate the environment :
+>> venv\Scripts\activate
+If you want to deactivate the environment then 
+>>deactivate
+If you are not getting any errors , you look like (env) {YOUR PROJECT DIRECTORY}
+After Activation then go the next step
+Install FLASK :
+>> pip install flask
+
+
+**Create a file in this project name app.py
+
+**and there code example::
+
+
+from flask import Flask, render_template
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/product')
+def product():
+    return'<h1> Product is there </h1>'
+
+
+if __name__ == "__main__":
+        app.run(debug=True)
+
+
+
+**then Run the project using flowing command
+>>flask run OR  >>flask --app app run
+
+
+					Mastaring Templete
+
+
+In static folder have to store all asset file in there.
+
+In template folder have to store all view file.
+
+
+					Database Connection
+
+
+**For mysql>>pip install flask-mysql
+**For mysql>>pip install Flask-MySQLdb
+**For Mysql connection need to install a package>> pip install Flask-SQLAlchemy
+**For API We can use flask-marshmallow >>pip install flask-marshmallow
+
+ALL 4 Package needed for connect with mysql database with marshmallow
+
+***app.py file for mysql
+
+from flask import Flask
+from flask import request, json, jsonify
+from flask_sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
+
+
+def create_app():
+    app = Flask(__name__)
+    app.debug = True
+
+    # Configure SQLAlchemy Connection
+    app.config['SECRET_KEY'] = 'seCREtKeY'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost:3308/flask_api'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
+
+
+    db.init_app(app)
+
+    from model.customer import Customers
+
+    @app.route('/customers')
+    def index():
+        customer = Customers.query.all()
+        
+        for data in customer:
+            print(data.customer_name)
+
+        return 'hi'
+    return app
+
+
+
+
+
+
+						
+
+
+
+
+**********For Loop In flask**********
+
+    from model.customer import Customers
+
+
+    @app.route('/customers')
+    def index():
+        customer = Customers.query.all()
+        
+        for data in customer:
+            print(data.customer_name)
+
+
+
+
+******** Flask API *******
+
+Use Marshmallow for get data throuh API
+
+pip install flask-marshmallow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**For Oracle database we have to install a package name cx_Oracle
+and command for this package is >>pip install cx_Oracle
+
+command for check database >>pip freeze
+
+After install the cx_Oracle then connect the database with python flask.
+
+inside your py file have to setup the code=>
+
+import cx_Oracle
+
+
+con = cx_Oracle.connect('system/Bmit123#@localhost:1521/BMITVAT')
+cur = con.cursor()
+
+sqlIn= 'INSERT INTO "SYSTEM".STUDENTS (STUDENT_NAME, STUDENT_TYPE, STATUS, USER_ID) VALUES (:1, :2, :3, :4)'
+cur.execute(sqlIn,("RANA BISWAS ARNAB", "REGULAR", "1", "2"))
+con.commit()
+
+cur.close()
+con.close()
+
+
+
+IN con the BMITVAT is the OracleServiceBMITVAT (This service name get from using (windows+r) then type services.msc)
+
