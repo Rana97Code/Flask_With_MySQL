@@ -76,7 +76,7 @@ def customer_byid(id):
 
 @app.route('/customer_update/<id>', methods = ['PUT'])
 def customer_upd(id):
-    data = Customers.query.get(id)
+
     _json = request.json
     customer_name = _json['customer_name']
     email = _json['email']
@@ -88,11 +88,23 @@ def customer_upd(id):
     c_tin = _json['c_tin']
     shipping_country_id = _json['shipping_country_id']
     shipping_address = _json['shipping_address']
-    new_customer = data(customer_name=customer_name, email=email, phone=phone, customer_type=customer_type, country_id=country_id, 
-                            c_address=c_address, c_bin_nid=c_bin_nid, c_tin=c_tin, shipping_country_id=shipping_country_id, shipping_address=shipping_address)
-    db.session.update(new_customer)
+
+    data = Customers.query.get(id)
+
+    data.customer_name = customer_name
+    data.email = customer_name
+    data.email = email
+    data.phone = phone
+    data.customer_type = customer_type
+    data.country_id = country_id
+    data.c_address = c_address
+    data.c_bin_nid = c_bin_nid
+    data.c_tin = c_tin
+    data.shipping_country_id = shipping_country_id
+    data.shipping_address = shipping_address
+
     db.session.commit()
-    return jsonify({"Message": "New Customer Update"})
+    return customer_schema.jsonify(data)
 
 
 @app.route('/get_customer/delete/<id>', methods=['DELETE'])
